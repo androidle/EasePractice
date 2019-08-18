@@ -1,17 +1,16 @@
-package com.leapp.yangle.practice;
+package com.leapp.yangle.common.base;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import com.leapp.yangle.common.Cons;
-import com.leapp.yangle.common.base.BaseActivity;
 
-public class MainActivity extends BaseActivity {
+public class BaseActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        Log.e(Cons.TAG, "onCreate: common/MainActivity");
+        Log.e(Cons.TAG, "onCreate: common/BaseActivity" );
     }
 }
