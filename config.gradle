@@ -1,0 +1,44 @@
+ext{
+
+    isRelease = true
+
+    kotlin_version = '1.3.30'
+
+    kotlin_lib = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    versions = [
+
+    ]
+
+
+    androidId = [
+            compileSdkVersion: 28,
+            minSdkVersion    : 19,
+            targetSdkVersion : 28,
+            versionCode      : 1,
+            versionName      : "1.0"
+    ]
+
+    appId = [
+            app: "com.leapp.yangle.practice",
+            personal:"com.leapp.yangle.module.personal",
+            order:"com.leapp.yangle.module.order"
+    ]
+
+    url = [
+            "debug"  : "https://www.11.22.33.com/debug",
+            "release": "https://www.11.22.33.com/debug"
+    ]
+
+    supportLibrary = "28.0.0"
+
+    supportDes = [
+            "appcompat" : "com.android.support:appcompat-v7:${supportLibrary}",
+            "recyclerview":"com.android.support:design:${supportLibrary}",
+            "design":"com.android.support:design:${supportLibrary}",
+    ]
+
+    constraint = 'com.android.support.constraint:constraint-layout:1.1.3'
+
+
+}
