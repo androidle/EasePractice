@@ -34,6 +34,21 @@ android {
         }
     }
 
+    // 配置资源路径,方便测试环境,打包不集成到正式环境
+    sourceSets {
+
+        main {
+            if (!isRelease) {
+                manifest.srcFile "src/main/debug/AndroidManifest.xml"
+            } else {
+                manifest.srcFile "src/main/AndroidManifest.xml"
+                java {
+                    exclude '**/debug/**'
+                }
+            }
+        }
+    }
+
 }
 
 dependencies {
