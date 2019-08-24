@@ -11,6 +11,6 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.e(Cons.TAG, "onCreate: common/BaseActivity" );
+        Log.e(Cons.TAG, "onCreate: " + this.getClass().getSimpleName() );
     }
 }
