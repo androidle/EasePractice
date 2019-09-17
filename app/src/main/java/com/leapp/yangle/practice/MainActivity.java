@@ -3,7 +3,9 @@ package com.leapp.yangle.practice;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import com.leapp.yangle.module.annotation.ARouter;
 
+@ARouter(path = "/app/MainActivity")
 public class MainActivity extends AppCompatActivity {
 
     @Override
