@@ -1,0 +1,11 @@
+import javax.lang.model.SourceVersion
+
+apply plugin: 'java-library'
+
+dependencies {
+    implementation project(':arouter_annotations')
+}
+
+sourceCompatibility = "8"
+targetCompatibility = "8"
+
