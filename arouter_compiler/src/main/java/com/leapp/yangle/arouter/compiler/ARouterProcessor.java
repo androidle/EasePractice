@@ -1,17 +1,19 @@
 package com.leapp.yangle.arouter.compiler;
 
+import com.google.auto.service.AutoService;
 import com.leapp.yangle.arouter.annotations.ARouter;
-
 import java.io.IOException;
 import java.io.Writer;
-import java.util.LinkedHashSet;
 import java.util.Set;
-
 import javax.annotation.processing.AbstractProcessor;
 import javax.annotation.processing.Filer;
 import javax.annotation.processing.Messager;
 import javax.annotation.processing.ProcessingEnvironment;
+import javax.annotation.processing.Processor;
 import javax.annotation.processing.RoundEnvironment;
+import javax.annotation.processing.SupportedAnnotationTypes;
+import javax.annotation.processing.SupportedOptions;
+import javax.annotation.processing.SupportedSourceVersion;
 import javax.lang.model.SourceVersion;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.TypeElement;
@@ -20,6 +22,10 @@ import javax.lang.model.util.Types;
 import javax.tools.Diagnostic;
 import javax.tools.JavaFileObject;
 
+@AutoService(Processor.class)//register processor
+@SupportedAnnotationTypes({"com.leapp.yangle.arouter.annotations.ARouter"})
+@SupportedSourceVersion(SourceVersion.RELEASE_8)
+@SupportedOptions("content")
 public class ARouterProcessor extends AbstractProcessor {
 
 
@@ -39,25 +45,6 @@ public class ARouterProcessor extends AbstractProcessor {
         String content = processingEnv.getOptions().get("content");
         mMessager.printMessage(Diagnostic.Kind.NOTE,"注解参数为====>"+ content);
 
-    }
-
-    @Override
-    public SourceVersion getSupportedSourceVersion() {
-        return SourceVersion.latestSupported();
-    }
-
-    @Override
-    public Set<String> getSupportedAnnotationTypes() {
-        Set<String> supportTypes = new LinkedHashSet<>();
-        supportTypes.add(ARouter.class.getCanonicalName());
-        return supportTypes;
-    }
-
-    @Override
-    public Set<String> getSupportedOptions() {
-        Set<String> supportOptions = new LinkedHashSet();
-        supportOptions.add("content");
-        return supportOptions;
     }
 
     @Override
