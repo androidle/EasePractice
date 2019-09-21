@@ -4,10 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
+import com.leapp.yangle.arouter.annotations.ARouter;
 import com.leapp.yangle.common.base.BaseActivity;
 import com.leapp.yangle.module.order.Order_MainActivity;
 import com.leapp.yangle.module.personal.Personal_MainActivity;
 
+@ARouter(path = "/app/MainActivity")
 public class MainActivity extends BaseActivity {
 
     @Override

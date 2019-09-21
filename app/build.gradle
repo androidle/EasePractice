@@ -18,8 +18,14 @@ android {
         versionCode androidId.versionCode
         versionName androidId.versionName
 
-
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        // 设置注解参数
+        javaCompileOptions{
+            annotationProcessorOptions{
+                arguments = [content : project.getName()]
+            }
+        }
     }
     buildTypes {
 
@@ -51,4 +57,7 @@ dependencies {
     }
 
     implementation project(":common")
+    implementation project(path: ':arouter_annotations')
+    annotationProcessor project(path: ':arouter_compiler')
+
 }
