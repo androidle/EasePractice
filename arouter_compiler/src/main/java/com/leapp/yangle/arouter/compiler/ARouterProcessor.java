@@ -2,9 +2,14 @@ package com.leapp.yangle.arouter.compiler;
 
 import com.google.auto.service.AutoService;
 import com.leapp.yangle.arouter.annotations.ARouter;
+import com.squareup.javapoet.ClassName;
+import com.squareup.javapoet.JavaFile;
+import com.squareup.javapoet.MethodSpec;
+import com.squareup.javapoet.TypeSpec;
+
 import java.io.IOException;
-import java.io.Writer;
 import java.util.Set;
+
 import javax.annotation.processing.AbstractProcessor;
 import javax.annotation.processing.Filer;
 import javax.annotation.processing.Messager;
@@ -16,11 +21,11 @@ import javax.annotation.processing.SupportedOptions;
 import javax.annotation.processing.SupportedSourceVersion;
 import javax.lang.model.SourceVersion;
 import javax.lang.model.element.Element;
+import javax.lang.model.element.Modifier;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.util.Elements;
 import javax.lang.model.util.Types;
 import javax.tools.Diagnostic;
-import javax.tools.JavaFileObject;
 
 @AutoService(Processor.class)//register processor
 @SupportedAnnotationTypes({"com.leapp.yangle.arouter.annotations.ARouter"})
@@ -57,23 +62,34 @@ public class ARouterProcessor extends AbstractProcessor {
             String className = element.getSimpleName().toString();
             mMessager.printMessage(Diagnostic.Kind.NOTE, "被注解的类有：" + className);
             String finalClassName = className + "$$ARouter";
-
-            // basic contact string（https://github.com/greenrobot/EventBus）
             try {
-                JavaFileObject sourceFile = mFiler.createSourceFile(packageName + "." + finalClassName);
-                Writer writer = sourceFile.openWriter();
-                writer.write("package " + packageName + ";\n");
-                writer.write("public class " + finalClassName + " {\n");
-                writer.write("public static Class<?> findTargetClass(String path) {\n");
+
                 ARouter aRouter = element.getAnnotation(ARouter.class);
-                writer.write("if (path.equals(\"" + aRouter.path() + "\")) {\n");
-                writer.write("return " + className + ".class;\n}\n");
-                writer.write("return null;\n");
-                writer.write("}\n}");
-                writer.close();
+
+                // user javaPoet
+                MethodSpec method = MethodSpec.methodBuilder("findTargetClass")
+                        .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
+                        .returns(Class.class) // 返回值Class<?>
+                        .addParameter(String.class, "path")
+                        // return path.equals("/app/MainActivity") ? MainActivity.class : null
+                        .addStatement("return path.equals($S) ? $T.class : null",
+                                aRouter.path(), ClassName.get((TypeElement) element))
+                        .build(); // 构建
+
+                TypeSpec type = TypeSpec.classBuilder(finalClassName)
+                        .addModifiers(Modifier.PUBLIC)
+                        .addMethod(method)
+                        .build();
+
+                JavaFile javaFile = JavaFile.builder(packageName, type)
+                        .build();
+
+                javaFile.writeTo(System.out);
+                javaFile.writeTo(mFiler);
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
         }
         return false;
     }
