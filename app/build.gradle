@@ -41,15 +41,11 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-
     implementation kotlin_lib
-    implementation constraint
 
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
-    supportDependencies.each{k,v -> implementation v}
+//    supportDependencies.each{k,v -> implementation v}
 
     if (isRelease) {
         implementation project(":order")
@@ -57,7 +53,7 @@ dependencies {
     }
 
     implementation project(":common")
-    implementation project(path: ':arouter_annotations')
-    annotationProcessor project(path: ':arouter_compiler')
+
+    annotationProcessor project(':arouter_compiler')
 
 }

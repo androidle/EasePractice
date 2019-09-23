@@ -2,12 +2,16 @@ package com.leapp.yangle.practice;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.view.View;
+import androidx.annotation.Nullable;
 import com.leapp.yangle.arouter.annotations.ARouter;
+import com.leapp.yangle.arouter.annotations.model.RouterBean;
+import com.leapp.yangle.arouter.api.ARouterLoadGroup;
+import com.leapp.yangle.arouter.api.ARouterLoadPath;
 import com.leapp.yangle.common.base.BaseActivity;
-import com.leapp.yangle.module.order.Order_MainActivity;
-import com.leapp.yangle.module.personal.Personal_MainActivity;
+import com.leapp.yangle.practice.test.ARouter$$Group$$Order;
+import com.leapp.yangle.practice.test.ARouter$$Group$$Personal;
+import java.util.Map;
 
 @ARouter(path = "/app/MainActivity")
 public class MainActivity extends BaseActivity {
@@ -19,14 +23,43 @@ public class MainActivity extends BaseActivity {
     }
 
     public void openPersonal(View view) {
-        Intent intent = new Intent(this, Personal_MainActivity.class);
-        intent.putExtra("name", "app");
-        startActivity(intent);
+        ARouterLoadGroup loadGroup = new ARouter$$Group$$Personal();
+        Map<String, Class<? extends ARouterLoadPath>> groupMap = loadGroup.loadGroup();
+        Class<? extends ARouterLoadPath> clazz = groupMap.get("personal");
+
+        try {
+            ARouterLoadPath path = clazz.newInstance();
+            Map<String, RouterBean> pathMap = path.loadPath();
+            RouterBean routerBean = pathMap.get("/personal/Personal_MainActivity");
+            if (routerBean != null) {
+                Intent intent = new Intent(this, routerBean.getClazz());
+                intent.putExtra("name", "personal");
+                startActivity(intent);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     public void openOrder(View view) {
-        Intent intent = new Intent(this, Order_MainActivity.class);
-        intent.putExtra("name", "app");
-        startActivity(intent);
+        ARouterLoadGroup loadGroup = new ARouter$$Group$$Order();
+        Map<String, Class<? extends ARouterLoadPath>> groupMap = loadGroup.loadGroup();
+        Class<? extends ARouterLoadPath> clazz = groupMap.get("order");
+
+        try {
+            ARouterLoadPath path = clazz.newInstance();
+            Map<String, RouterBean> pathMap = path.loadPath();
+            RouterBean routerBean = pathMap.get("/order/Order_MainActivity");
+            if (routerBean != null) {
+                Intent intent = new Intent(this, routerBean.getClazz());
+                intent.putExtra("name", "order");
+                startActivity(intent);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

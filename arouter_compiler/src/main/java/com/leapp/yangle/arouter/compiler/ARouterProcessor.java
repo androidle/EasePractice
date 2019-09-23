@@ -2,6 +2,7 @@ package com.leapp.yangle.arouter.compiler;
 
 import com.google.auto.service.AutoService;
 import com.leapp.yangle.arouter.annotations.ARouter;
+import com.leapp.yangle.arouter.compiler.utils.Constants;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
@@ -28,7 +29,7 @@ import javax.lang.model.util.Types;
 import javax.tools.Diagnostic;
 
 @AutoService(Processor.class)//register processor
-@SupportedAnnotationTypes({"com.leapp.yangle.arouter.annotations.ARouter"})
+@SupportedAnnotationTypes(Constants.AROUTER_ANNOTATION_TYPES)
 @SupportedSourceVersion(SourceVersion.RELEASE_8)
 @SupportedOptions("content")
 public class ARouterProcessor extends AbstractProcessor {

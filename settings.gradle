@@ -1,1 +1,1 @@
-include ':app', ':order', ':personal', ':common', ':arouter_annotations', ':arouter_compiler'
+include ':app', ':order', ':personal', ':common', ':arouter_annotations', ':arouter_compiler', ':arouter_api'
