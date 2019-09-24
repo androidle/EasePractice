@@ -1,7 +1,7 @@
 package com.leapp.yangle.practice.test;
 
-import com.leapp.yangle.arouter.api.ARouterLoadGroup;
-import com.leapp.yangle.arouter.api.ARouterLoadPath;
+import com.leapp.yangle.arouter.api.core.ARouterLoadGroup;
+import com.leapp.yangle.arouter.api.core.ARouterLoadPath;
 
 import java.util.HashMap;
 import java.util.Map;

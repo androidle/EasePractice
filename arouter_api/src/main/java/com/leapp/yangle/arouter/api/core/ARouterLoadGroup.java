@@ -1,4 +1,4 @@
-package com.leapp.yangle.arouter.api;
+package com.leapp.yangle.arouter.api.core;
 
 
 import java.util.Map;

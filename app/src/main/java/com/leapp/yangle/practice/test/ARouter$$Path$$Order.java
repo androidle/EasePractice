@@ -1,7 +1,7 @@
 package com.leapp.yangle.practice.test;
 
 import com.leapp.yangle.arouter.annotations.model.RouterBean;
-import com.leapp.yangle.arouter.api.ARouterLoadPath;
+import com.leapp.yangle.arouter.api.core.ARouterLoadPath;
 import com.leapp.yangle.module.order.Order_MainActivity;
 
 import java.util.HashMap;

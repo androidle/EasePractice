@@ -10,6 +10,7 @@ ext{
 
     ]
 
+    packageNameForApt = 'com.leapp.yangle.module.apt'
 
     androidId = [
             compileSdkVersion: 28,
@@ -42,7 +43,6 @@ ext{
             "appcompat" : "androidx.appcompat:appcompat:1.0.2",
             "test_runner" :"androidx.test:runner:1.1.1",
             "expresso-core" :'androidx.test.espresso:espresso-core:3.1.1',
-//            "constraintlayout":"androidx.constraintlayout:constraintlayout:1.1.2"
             "constraintlayout":"androidx.constraintlayout:constraintlayout:1.1.3"
     ]
 
