@@ -22,8 +22,11 @@ android {
 
         // 设置注解参数
         javaCompileOptions{
-            annotationProcessorOptions{
-                arguments = [content : project.getName()]
+            annotationProcessorOptions {
+                arguments = [
+                        moduleName       : project.getName(),
+                        packageNameForApt: packageNameForApt
+                ]
             }
         }
     }
@@ -44,8 +47,6 @@ dependencies {
     implementation kotlin_lib
 
     testImplementation 'junit:junit:4.12'
-
-//    supportDependencies.each{k,v -> implementation v}
 
     if (isRelease) {
         implementation project(":order")

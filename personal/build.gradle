@@ -23,6 +23,16 @@ android {
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
+        // 设置注解参数
+        javaCompileOptions{
+            annotationProcessorOptions {
+                arguments = [
+                        moduleName       : project.getName(),
+                        packageNameForApt: packageNameForApt
+                ]
+            }
+        }
+
     }
 
     buildTypes {
@@ -53,4 +63,5 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     implementation project(":common")
+    annotationProcessor project(':arouter_compiler')
 }

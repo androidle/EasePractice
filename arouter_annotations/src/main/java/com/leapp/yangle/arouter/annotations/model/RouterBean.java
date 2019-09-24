@@ -4,6 +4,9 @@ import javax.lang.model.element.Element;
 
 public class RouterBean {
 
+    private RouterBean() {
+    }
+
     private RouterBean(Builder builder) {
         this.element = builder.element;
         this.group = builder.group;
@@ -21,8 +24,16 @@ public class RouterBean {
         return new RouterBean(type, clazz, path, group);
     }
 
+    public void setType(Type type) {
+        this.type = type;
+    }
+
     public Type getType() {
         return type;
+    }
+
+    public void setGroup(String group) {
+        this.group = group;
     }
 
     public Element getElement() {
@@ -87,4 +98,14 @@ public class RouterBean {
         }
     }
 
+    @Override
+    public String toString() {
+        return "RouterBean{" +
+                "type=" + type +
+                ", element=" + element +
+                ", clazz=" + clazz +
+                ", group='" + group + '\'' +
+                ", path='" + path + '\'' +
+                '}';
+    }
 }
