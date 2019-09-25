@@ -3,18 +3,27 @@ package com.leapp.yangle.practice;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+
 import androidx.annotation.Nullable;
+
 import com.leapp.yangle.arouter.annotations.ARouter;
+import com.leapp.yangle.arouter.annotations.Parameter;
 import com.leapp.yangle.arouter.annotations.model.RouterBean;
 import com.leapp.yangle.arouter.api.core.ARouterLoadGroup;
 import com.leapp.yangle.arouter.api.core.ARouterLoadPath;
 import com.leapp.yangle.common.base.BaseActivity;
 import com.leapp.yangle.practice.test.ARouter$$Group$$Order;
 import com.leapp.yangle.practice.test.ARouter$$Group$$Personal;
+
 import java.util.Map;
 
 @ARouter(path = "/app/MainActivity")
 public class MainActivity extends BaseActivity {
+
+    @Parameter(name = "age")
+    int age = 1;
+    @Parameter
+    String name;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -34,6 +43,7 @@ public class MainActivity extends BaseActivity {
             if (routerBean != null) {
                 Intent intent = new Intent(this, routerBean.getClazz());
                 intent.putExtra("name", "personal");
+                intent.putExtra("age", 28);
                 startActivity(intent);
             }
 
@@ -55,6 +65,7 @@ public class MainActivity extends BaseActivity {
             if (routerBean != null) {
                 Intent intent = new Intent(this, routerBean.getClazz());
                 intent.putExtra("name", "order");
+                intent.putExtra("isRelease", true);
                 startActivity(intent);
             }
 
