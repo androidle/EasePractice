@@ -33,7 +33,7 @@ dependencies {
     api rootProject.androidx.appcompat
     api rootProject.androidx.constraintlayout
 
-    testImplementation 'junit:junit:4.12'
+    testApi 'junit:junit:4.12'
 
     // 每个模块都要依赖arouter api对外提供的接口
     // app/personal/order 都依赖于common公共基础库

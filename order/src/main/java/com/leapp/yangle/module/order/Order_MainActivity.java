@@ -6,10 +6,10 @@ import android.view.View;
 
 import com.leapp.yangle.arouter.annotations.ARouter;
 import com.leapp.yangle.arouter.annotations.Parameter;
-import com.leapp.yangle.arouter.api.core.ParameterLoad;
+import com.leapp.yangle.arouter.api.ParameterManager;
 import com.leapp.yangle.common.base.BaseActivity;
 
-@ARouter(path = "/order/MainActivity")
+@ARouter(path = "/order/Order_MainActivity")
 public class Order_MainActivity extends BaseActivity {
 
     @Parameter
@@ -23,8 +23,7 @@ public class Order_MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.order_activity_main);
 
-        ParameterLoad parameterLoad = new Order_MainActivity$$Parameter();
-        parameterLoad.loadParameter(this);
+        ParameterManager.getInstance().loadParameter(this);
 
         if (getIntent() != null) {
             Log.e("ARouter", "name ==>>>" + name + " / release ===>>>" + release);

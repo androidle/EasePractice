@@ -12,8 +12,8 @@ import com.leapp.yangle.arouter.annotations.model.RouterBean;
 import com.leapp.yangle.arouter.api.core.ARouterLoadGroup;
 import com.leapp.yangle.arouter.api.core.ARouterLoadPath;
 import com.leapp.yangle.common.base.BaseActivity;
-import com.leapp.yangle.practice.test.ARouter$$Group$$Order;
-import com.leapp.yangle.practice.test.ARouter$$Group$$Personal;
+import com.leapp.yangle.module.apt.ARouter$$Group$$order;
+import com.leapp.yangle.module.apt.ARouter$$Group$$personal;
 
 import java.util.Map;
 
@@ -32,7 +32,7 @@ public class MainActivity extends BaseActivity {
     }
 
     public void openPersonal(View view) {
-        ARouterLoadGroup loadGroup = new ARouter$$Group$$Personal();
+        ARouterLoadGroup loadGroup = new ARouter$$Group$$personal();
         Map<String, Class<? extends ARouterLoadPath>> groupMap = loadGroup.loadGroup();
         Class<? extends ARouterLoadPath> clazz = groupMap.get("personal");
 
@@ -54,7 +54,7 @@ public class MainActivity extends BaseActivity {
     }
 
     public void openOrder(View view) {
-        ARouterLoadGroup loadGroup = new ARouter$$Group$$Order();
+        ARouterLoadGroup loadGroup = new ARouter$$Group$$order();
         Map<String, Class<? extends ARouterLoadPath>> groupMap = loadGroup.loadGroup();
         Class<? extends ARouterLoadPath> clazz = groupMap.get("order");
 
