@@ -1,4 +1,4 @@
-package com.leapp.yangle.practice;
+package com.leapp.yangle.module;
 
 import com.leapp.yangle.common.base.BaseApplication;
 

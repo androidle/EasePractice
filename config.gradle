@@ -21,7 +21,7 @@ ext{
     ]
 
     appId = [
-            app: "com.leapp.yangle.practice",
+            app: "com.leapp.yangle.module",
             personal:"com.leapp.yangle.module.personal",
             order:"com.leapp.yangle.module.order"
     ]

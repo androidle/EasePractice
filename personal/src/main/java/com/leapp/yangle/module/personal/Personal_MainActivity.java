@@ -7,6 +7,7 @@ import android.view.View;
 import com.leapp.yangle.arouter.annotations.ARouter;
 import com.leapp.yangle.arouter.annotations.Parameter;
 import com.leapp.yangle.arouter.api.ParameterManager;
+import com.leapp.yangle.arouter.api.RouterManager;
 import com.leapp.yangle.common.base.BaseActivity;
 
 @ARouter(path = "/personal/Personal_MainActivity")
@@ -32,6 +33,10 @@ public class Personal_MainActivity extends BaseActivity {
     }
 
     public void openMain(View view) {
+        RouterManager.getInstance()
+                .build("/app/MainActivity")
+                .withResultString("callBack", "from personal result")
+                .navigation(this);
     }
 
     public void openOrder(View view) {
