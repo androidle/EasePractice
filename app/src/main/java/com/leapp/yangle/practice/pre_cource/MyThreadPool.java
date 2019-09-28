@@ -1,4 +1,4 @@
-package com.leapp.yangle.practice;
+package com.leapp.yangle.practice.pre_cource;
 
 import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.ThreadPoolExecutor;

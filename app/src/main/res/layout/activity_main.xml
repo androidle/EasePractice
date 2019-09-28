@@ -7,13 +7,27 @@
         android:layout_height="match_parent"
         tools:context=".MainActivity">
 
-    <TextView
+    <Button
+            android:id="@+id/btn_okhttp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Hello World!"
+            android:text="okhttp_request"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
+            android:textAllCaps="false"
+            android:onClick="okhttpRequest"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
 
+    <Button
+            android:id="@+id/btn_my_okhttp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="my_okhttp_request"
+            android:textAllCaps="false"
+            android:onClick="myOkhttpRequest"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/btn_okhttp"/>
 </android.support.constraint.ConstraintLayout>

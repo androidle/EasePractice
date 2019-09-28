@@ -64,3 +64,14 @@ RealInterceptorChain //getResponseWithInterceptorChain
         writeTimeout);
     Interceptor interceptor = interceptors.get(index);
     Response response = interceptor.intercept(next);
+
+
+
+=================自定义实现okhttp===================
+基本框架构建
+request 封装
+
+enqueue 异步任务执行
+
+response
+

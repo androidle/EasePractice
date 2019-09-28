@@ -1,4 +1,4 @@
-package com.leapp.yangle.practice.chain2;
+package com.leapp.yangle.practice.pre_cource.chain2;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.leapp.yangle.practice.chain;
+package com.leapp.yangle.practice.pre_cource.chain;
 
 public class Task2 extends BaseTask {
 
