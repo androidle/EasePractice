@@ -7,6 +7,7 @@ import android.view.View;
 import com.leapp.yangle.arouter.annotations.ARouter;
 import com.leapp.yangle.arouter.annotations.Parameter;
 import com.leapp.yangle.arouter.api.ParameterManager;
+import com.leapp.yangle.common.app.IUser;
 import com.leapp.yangle.common.base.BaseActivity;
 
 @ARouter(path = "/order/Order_MainActivity")
@@ -18,6 +19,9 @@ public class Order_MainActivity extends BaseActivity {
     @Parameter(name = "isRelease")
     boolean release;
 
+    @Parameter(name = "/app/getUser")
+    IUser appUser;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,6 +32,8 @@ public class Order_MainActivity extends BaseActivity {
         if (getIntent() != null) {
             Log.e("ARouter", "name ==>>>" + name + " / release ===>>>" + release);
         }
+
+        Log.e("==Order_MainActivity==>", "====from app user===" + appUser.getUser());
     }
 
     public void openMain(View view) {

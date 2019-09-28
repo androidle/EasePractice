@@ -110,6 +110,8 @@ public class RouterManager {
                             context.startActivity(intent,bundlerManager.getBundle());
                         }
                         break;
+                    case CALL:
+                        return routerBean.getClazz().newInstance();
                 }
             }
 

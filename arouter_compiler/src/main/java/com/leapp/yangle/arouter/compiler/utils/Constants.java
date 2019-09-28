@@ -20,6 +20,8 @@ public class Constants {
 
     public static final String PARAMETER_LOAD = BASE_PACKAGE + ".core.ParameterLoad";
 
+    public static final String CALL =  BASE_PACKAGE + ".core.Call";;
+
     public static final String PATH_METHOD_NAME = "loadPath";
 
     public static final String GROUP_METHOD_NAME = "loadGroup";
@@ -39,4 +41,5 @@ public class Constants {
     public static final String PARAMETER_FILE_NAME = "$$Parameter";
 
 
+    public static final String ROUTER_MANAGER = "RouterManager";
 }

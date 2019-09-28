@@ -34,4 +34,9 @@
             android:layout_gravity="bottom|center_horizontal"
             android:layout_height="wrap_content"/>
 
+    <ImageView
+            android:id="@+id/iv_Test"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
 </LinearLayout>

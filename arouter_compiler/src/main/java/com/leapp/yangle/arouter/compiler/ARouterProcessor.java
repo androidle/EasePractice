@@ -100,7 +100,10 @@ public class ARouterProcessor extends AbstractProcessor {
     private void parseElements(Set<? extends Element> elements) throws IOException {
 
         TypeElement activityType = mElementUtils.getTypeElement(Constants.ACTIVITY);
+        TypeElement callType = mElementUtils.getTypeElement(Constants.CALL);
+
         TypeMirror activityMirror = activityType.asType();
+        TypeMirror callMirror = callType.asType();
 
         for (Element element : elements) {
             TypeMirror typeMirror = element.asType();
@@ -118,6 +121,8 @@ public class ARouterProcessor extends AbstractProcessor {
 
             if (mTypeUtils.isSubtype(typeMirror, activityMirror)) {
                 routerBean.setType(RouterBean.Type.ACTIVITY);
+            } else if (mTypeUtils.isSubtype(typeMirror, callMirror)) {
+                routerBean.setType(RouterBean.Type.CALL);
             } else {
                 throw new RuntimeException("@ARouter only support Activity currently");
             }

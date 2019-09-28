@@ -6,6 +6,7 @@ import com.leapp.yangle.arouter.compiler.utils.EmptyUtils;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterSpec;
+import com.squareup.javapoet.TypeName;
 
 import javax.annotation.processing.Messager;
 import javax.lang.model.element.Element;
@@ -26,6 +27,7 @@ public class ParameterFactory {
     private ClassName className;
 
     private MethodSpec.Builder methodBuilder;
+    private TypeMirror callMirror;
 
     private ParameterFactory() {
     }
@@ -39,6 +41,10 @@ public class ParameterFactory {
                 .addAnnotation(Override.class)
                 .addModifiers(Modifier.PUBLIC)
                 .addParameter(builder.parameterSpec);
+
+        this.callMirror = builder.elementUtils
+                .getTypeElement(Constants.CALL)
+                .asType();
     }
 
     public void addFirstStatement() {
@@ -69,6 +75,15 @@ public class ParameterFactory {
         } else {
             if (typeMirror.toString().equalsIgnoreCase(Constants.STRING)) {
                 methodContent += "getStringExtra($S)";
+            } else if(typesUtils.isSubtype(typeMirror,callMirror)) {
+                // t.iUser = (IUserImpl)RouterManager.getInstance().build("/order/getOrderInfo").navigation(t)
+                methodContent = "t." + fieldName + " =($T)$T.getInstance().build($S).navigation(t)";
+                methodBuilder.addStatement(methodContent,
+                        TypeName.get(typeMirror),
+                        ClassName.get(Constants.BASE_PACKAGE, Constants.ROUTER_MANAGER),
+                        annotationValue);
+
+                return;
             }
         }
 
@@ -111,6 +126,11 @@ public class ParameterFactory {
             return this;
         }
 
+        public Builder setElementUtils(Elements elementUtils) {
+            this.elementUtils = elementUtils;
+            return this;
+        }
+
         public ParameterFactory build() {
             if (parameterSpec == null) {
                 throw new IllegalArgumentException("parameterSpec == null");
@@ -127,9 +147,5 @@ public class ParameterFactory {
             return new ParameterFactory(this);
         }
 
-        public Builder setElementUtils(Elements elementUtils) {
-            this.elementUtils = elementUtils;
-            return this;
-        }
     }
 }
