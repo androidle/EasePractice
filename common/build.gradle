@@ -1,18 +1,12 @@
 apply plugin: 'com.android.library'
 
-
-def androidId = rootProject.ext.androidId
-
 android {
-    compileSdkVersion androidId.compileSdkVersion
-
-
-
+    compileSdkVersion versions.compileSdk
     defaultConfig {
-        minSdkVersion androidId.minSdkVersion
-        targetSdkVersion androidId.targetSdkVersion
-        versionCode androidId.versionCode
-        versionName androidId.versionName
+        minSdkVersion versions.minSdk
+        targetSdkVersion versions.targetSdk
+        versionCode versions.versionCode
+        versionName versions.versionName
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -30,15 +24,15 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    api rootProject.androidx.appcompat
-    api rootProject.androidx.constraintlayout
+    api deps.androidx.appcompat
+    api deps.androidx.constraintlayout
 
-    testImplementation 'junit:junit:4.12'
+    testImplementation deps.junit
 
     // 每个模块都要依赖arouter api对外提供的接口
     // app/personal/order 都依赖于common公共基础库
     api project(':arouter_api')
 
-    api rootProject.gson
+    api deps.gson
 
 }

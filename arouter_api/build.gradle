@@ -1,17 +1,12 @@
 apply plugin: 'com.android.library'
 
-
-def androidId = rootProject.ext.androidId
-def url = rootProject.ext.url
-def supportDependencies = rootProject.ext.supportDes
-
 android {
-    compileSdkVersion androidId.compileSdkVersion
+    compileSdkVersion versions.compileSdk
     defaultConfig {
-        minSdkVersion androidId.minSdkVersion
-        targetSdkVersion androidId.targetSdkVersion
-        versionCode androidId.versionCode
-        versionName androidId.versionName
+        minSdkVersion versions.minSdk
+        targetSdkVersion versions.targetSdk
+        versionCode versions.versionCode
+        versionName versions.versionName
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles 'consumer-rules.pro'
@@ -28,12 +23,7 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-
-    implementation rootProject.androidx.appcompat
-
-    testImplementation 'junit:junit:4.12'
-//    androidTestImplementation 'androidx.test:runner:1.1.1'
-//    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
-
+    implementation deps.androidx.appcompat
+    testImplementation deps.junit
     api project(':arouter_annotations')
 }

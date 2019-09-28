@@ -1,54 +1,68 @@
 ext{
 
-    isRelease = true
+    configs = [
+            isRelease : true,
+            packageNameForApt : 'com.leapp.yangle.module.apt',
+            appId: [
+                    app     : "com.leapp.yangle.module",
+                    personal: "com.leapp.yangle.module.personal",
+                    order   : "com.leapp.yangle.module.order"
+            ],
 
-    kotlin_version = '1.3.30'
+            url  : [
+                    "debug"  : "https://www.11.22.33.com/debug",
+                    "release": "https://www.11.22.33.com/debug"
+            ]
 
-    kotlin_lib = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    ]
 
     versions = [
+            kotlin : '1.3.30',
+            compileSdk : 28,
+            minSdk     : 19,
+            targetSdk  : 28,
+            versionCode: 1,
+            versionName: "1.0",
+
+            supportLibrary : "28.0.0"
+    ]
+
+    deps = [
+
+            androidx      : [
+                    "appcompat"       : "androidx.appcompat:appcompat:1.0.2",
+                    "test_runner"     : "androidx.test:runner:1.1.1",
+                    "expresso-core"   : 'androidx.test.espresso:espresso-core:3.1.1',
+                    "constraintlayout": "androidx.constraintlayout:constraintlayout:1.1.3",
+            ],
+
+            "appcompat"   : "com.android.support:appcompat-v7:${versions.supportLibrary}",
+            "recyclerview": "com.android.support:design:${versions.supportLibrary}",
+            "design"      : "com.android.support:design:${versions.supportLibrary}",
+
+
+            'kotlin'      : [
+                    'stdLibJdk8': "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${versions.kotlin}"
+            ],
+
+
+            gson : 'com.google.code.gson:gson:2.8.5',
+
+            constraint : 'com.android.support.constraint:constraint-layout:1.1.3',
+
+            javapoet: 'com.squareup:javapoet:1.11.1',
+
+            'auto': [
+                    'service': 'com.google.auto.service:auto-service:1.0-rc6',
+                    'common': 'com.google.auto:auto-common:0.10',
+            ],
+
+            junit: 'junit:junit:4.12',
+
 
     ]
 
-    packageNameForApt = 'com.leapp.yangle.module.apt'
 
-    androidId = [
-            compileSdkVersion: 28,
-            minSdkVersion    : 19,
-            targetSdkVersion : 28,
-            versionCode      : 1,
-            versionName      : "1.0"
-    ]
-
-    appId = [
-            app: "com.leapp.yangle.module",
-            personal:"com.leapp.yangle.module.personal",
-            order:"com.leapp.yangle.module.order"
-    ]
-
-    url = [
-            "debug"  : "https://www.11.22.33.com/debug",
-            "release": "https://www.11.22.33.com/debug"
-    ]
-
-    supportLibrary = "28.0.0"
-
-    supportDes = [
-            "appcompat" : "com.android.support:appcompat-v7:${supportLibrary}",
-            "recyclerview":"com.android.support:design:${supportLibrary}",
-            "design":"com.android.support:design:${supportLibrary}",
-    ]
-
-    androidx = [
-            "appcompat" : "androidx.appcompat:appcompat:1.0.2",
-            "test_runner" :"androidx.test:runner:1.1.1",
-            "expresso-core" :'androidx.test.espresso:espresso-core:3.1.1',
-            "constraintlayout":"androidx.constraintlayout:constraintlayout:1.1.3"
-    ]
-
-    gson = 'com.google.code.gson:gson:2.8.5'
-
-    constraint = 'com.android.support.constraint:constraint-layout:1.1.3'
 
 
 }

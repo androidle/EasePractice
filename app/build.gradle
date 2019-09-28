@@ -4,19 +4,14 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 
-def androidId = rootProject.ext.androidId
-def appId = rootProject.ext.appId
-def url = rootProject.ext.url
-def supportDependencies = rootProject.ext.supportDes
-
 android {
-    compileSdkVersion androidId.compileSdkVersion
+    compileSdkVersion versions.compileSdk
     defaultConfig {
-        applicationId appId.app
-        minSdkVersion androidId.minSdkVersion
-        targetSdkVersion androidId.targetSdkVersion
-        versionCode androidId.versionCode
-        versionName androidId.versionName
+        applicationId configs.appId.app
+        minSdkVersion versions.minSdk
+        targetSdkVersion versions.targetSdk
+        versionCode versions.versionCode
+        versionName versions.versionName
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -25,7 +20,7 @@ android {
             annotationProcessorOptions {
                 arguments = [
                         moduleName       : project.getName(),
-                        packageNameForApt: packageNameForApt
+                        packageNameForApt: configs.packageNameForApt
                 ]
             }
         }
@@ -33,7 +28,7 @@ android {
     buildTypes {
 
         debug {
-            buildConfigField("String","debugUrl","\"${url.debug}\"")
+            buildConfigField("String","debugUrl","\"${configs.url.debug}\"")
         }
         release {
             minifyEnabled false
@@ -44,11 +39,11 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation kotlin_lib
+    implementation deps.kotlin.stdLibJdk8
 
-    testImplementation 'junit:junit:4.12'
+    testImplementation deps.junit
 
-    if (isRelease) {
+    if (configs.isRelease) {
         implementation project(":order")
         implementation project(":personal")
     }

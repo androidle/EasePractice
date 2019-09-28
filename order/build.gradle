@@ -1,27 +1,20 @@
-if (isRelease) {
+if (configs.isRelease) {
     apply plugin: 'com.android.library'
 } else {
     apply plugin: 'com.android.application'
 }
 
-
-def androidId = rootProject.ext.androidId
-def appId = rootProject.ext.appId
-def supportDependencies = rootProject.ext.supportDes
-
 android {
 
-
-    compileSdkVersion androidId.compileSdkVersion
-
+    compileSdkVersion versions.compileSdk
     defaultConfig {
-        if (!isRelease) {
-            applicationId appId.order
+        if (!configs.isRelease) {
+            applicationId configs.appId.order
         }
-        minSdkVersion androidId.minSdkVersion
-        targetSdkVersion androidId.targetSdkVersion
-        versionCode androidId.versionCode
-        versionName androidId.versionName
+        minSdkVersion versions.minSdk
+        targetSdkVersion versions.targetSdk
+        versionCode versions.versionCode
+        versionName versions.versionName
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -30,7 +23,7 @@ android {
             annotationProcessorOptions {
                 arguments = [
                         moduleName       : project.getName(),
-                        packageNameForApt: packageNameForApt
+                        packageNameForApt: configs.packageNameForApt
                 ]
             }
         }
@@ -48,7 +41,7 @@ android {
     sourceSets {
 
         main {
-            if (!isRelease) {
+            if (!configs.isRelease) {
                 manifest.srcFile "src/main/debug/AndroidManifest.xml"
             } else {
                 manifest.srcFile "src/main/AndroidManifest.xml"
