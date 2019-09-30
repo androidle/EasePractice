@@ -4,6 +4,7 @@ public class OkHttpClient2 {
 
     Dispatcher2 dispatcher;
     private boolean isCanceled;
+    private int retryCount;
 
     public OkHttpClient2() {
         this(new Builder());
@@ -12,6 +13,7 @@ public class OkHttpClient2 {
     public OkHttpClient2(Builder builder) {
         this.dispatcher = builder.dispatcher;
         this.isCanceled = builder.isCanceled;
+        this.retryCount = builder.retryCount;
     }
 
     public boolean isCanceled() {
@@ -26,10 +28,15 @@ public class OkHttpClient2 {
         return dispatcher;
     }
 
+    public int retryCount() {
+        return retryCount;
+    }
+
     public static final class Builder{
 
         Dispatcher2 dispatcher;
         private boolean isCanceled;
+        private int retryCount = 3;
 
         public Builder() {
             dispatcher = new Dispatcher2();
@@ -42,6 +49,11 @@ public class OkHttpClient2 {
 
         public Builder canceled() {
             this.isCanceled = true;
+            return this;
+        }
+
+        public Builder retryCount(int retryCount) {
+            this.retryCount = retryCount;
             return this;
         }
 

@@ -1,6 +1,14 @@
 package com.leapp.yangle.practice.my_okhttp;
 
+import com.leapp.yangle.practice.my_okhttp.chain.ChainManager;
+import com.leapp.yangle.practice.my_okhttp.chain.ConnectionServerInterceptor;
+import com.leapp.yangle.practice.my_okhttp.chain.Interceptor2;
+import com.leapp.yangle.practice.my_okhttp.chain.ReRequestInterceptor;
+import com.leapp.yangle.practice.my_okhttp.chain.RequestHeaderInterceptor;
+
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class RealCall2 implements Call2 {
 
@@ -59,12 +67,28 @@ public class RealCall2 implements Call2 {
             }
         }
 
-        private Response2 getResponseWithInterceptorChain() {
-            Response2 response2 = new Response2();
-            response2.setBody("test==流程====");
+        private Response2 getResponseWithInterceptorChain() throws IOException {
+//            Response2 response2 = new Response2();
+//            response2.setBody("test==流程====");
+//            return response2;
+
+            List<Interceptor2> interceptor2List = new ArrayList<>();
+            interceptor2List.add(new ReRequestInterceptor());// 添加重试拦截器
+            interceptor2List.add(new RequestHeaderInterceptor());// 请求头拦截器
+            interceptor2List.add(new ConnectionServerInterceptor());// 连接服务器拦截器
+
+            ChainManager chainManager = new ChainManager(interceptor2List,0,request2,RealCall2.this);
+            Response2 response2 = chainManager.proceed(request2);
+
             return response2;
         }
+    }
 
+    public OkHttpClient2 getOkHttpClient2() {
+        return okHttpClient2;
+    }
 
+    public Request2 getRequest2() {
+        return request2;
     }
 }
