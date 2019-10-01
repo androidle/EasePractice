@@ -70,12 +70,17 @@ RealInterceptorChain //getResponseWithInterceptorChain
 =================自定义实现okhttp===================
 基本框架构建
 request 封装
-
 enqueue 异步任务执行
-
 response
-
 责任链拦截器
 网络请求
 网络响应
+
+责任链模式
+1.重试拦截器
+2.请求头拦截器
+3.连接服务器拦截器 (socket请求)
+
+连接池
+
 
