@@ -12,6 +12,8 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
 
+import javax.net.ssl.SSLSocketFactory;
+
 public class ConnectionServerInterceptor implements Interceptor2 {
 
     @Override
@@ -19,7 +21,21 @@ public class ConnectionServerInterceptor implements Interceptor2 {
         System.out.println("连接服务器拦截器, 执行了...");
         SocketRequestServer requestServer = new SocketRequestServer();
         Request2 request = chain2.request();
-        Socket socket = new Socket(requestServer.getHost(request), requestServer.getPort(request));
+
+        String host = requestServer.getHost(request);
+        int post = requestServer.getPort(request);
+
+        String httpOrHttps = requestServer.getHttpOrHttps(request.getUrl());
+        Socket socket = null;
+        if (httpOrHttps != null) {
+            if ("https" .equalsIgnoreCase(httpOrHttps)) {
+                socket = SSLSocketFactory.getDefault().createSocket(host, post);
+            } else if ("http" .equalsIgnoreCase(httpOrHttps)) {
+                socket = new Socket(host, post);
+            } else {
+                throw new IllegalArgumentException("only support http/https ,please confirm !!!");
+            }
+        }
 
         // todo 请求
         OutputStream os = socket.getOutputStream();

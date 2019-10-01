@@ -73,4 +73,15 @@ public class SocketRequestServer {
 
         return stringBuffer.toString();
     }
+
+    public String getHttpOrHttps(String urlStr) {
+        try {
+            URL url = new URL(urlStr);
+            return url.getProtocol();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
 }
