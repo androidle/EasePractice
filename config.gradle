@@ -4,9 +4,7 @@ ext{
             isRelease : true,
 
             appId: [
-                    app     : "com.leapp.yangle.module",
-                    personal: "com.leapp.yangle.module.personal",
-                    order   : "com.leapp.yangle.module.order"
+                    app     : "com.leapp.yangle.practice",
             ],
 
             url  : [
@@ -32,7 +30,7 @@ ext{
             androidx      : [
                     "appcompat"       : "androidx.appcompat:appcompat:1.0.2",
                     "test_runner"     : "androidx.test:runner:1.1.1",
-                    "expresso-core"   : 'androidx.test.espresso:espresso-core:3.1.1',
+                    "expresso"   : 'androidx.test.espresso:espresso-core:3.1.1',
                     "constraintlayout": "androidx.constraintlayout:constraintlayout:1.1.3",
             ],
 

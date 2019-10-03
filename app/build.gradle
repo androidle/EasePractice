@@ -5,13 +5,14 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion versions.compileSdk
     defaultConfig {
-        applicationId "com.leapp.yangle.practice"
-        minSdkVersion 19
-        targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
+        applicationId configs.appId.app
+        minSdkVersion versions.minSdk
+        targetSdkVersion versions.targetSdk
+        versionCode versions.versionCode
+        versionName versions.versionName
+
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -25,10 +26,10 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation deps.kotlin.stdLibJdk8
-    implementation deps.appcompat
-    implementation deps.constraint
+    implementation deps.androidx.appcompat
+    implementation deps.androidx.constraintlayout
     testImplementation deps.junit
 
-    androidTestImplementation deps.test_runner
-    androidTestImplementation deps.expresso
+    androidTestImplementation deps.androidx.test_runner
+    androidTestImplementation deps.androidx.expresso
 }
