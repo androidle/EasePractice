@@ -4,9 +4,7 @@ ext{
             isRelease : true,
 
             appId: [
-                    app     : "com.leapp.yangle.module",
-                    personal: "com.leapp.yangle.module.personal",
-                    order   : "com.leapp.yangle.module.order"
+                    app     : "com.leapp.yangle.practice",
             ],
 
             url  : [
