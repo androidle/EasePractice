@@ -1,5 +1,6 @@
 package com.leapp.yangle.practice;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -36,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
             Log.e(TAG, "hook 失败...");
         }
+
+
     }
 
     private void hook(final View view) throws Exception {
@@ -81,4 +84,12 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
+    /**
+     * have you declared this activity in your AndroidManifest.xml?
+     * @param view
+     */
+    public void startTestActivity(View view) {
+        startActivity(new Intent(MainActivity.this,TestActivity.class));
+    }
 }
