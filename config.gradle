@@ -4,7 +4,8 @@ ext{
             isRelease : true,
 
             appId: [
-                    app     : "com.leapp.yangle.practice",
+                    app   : "com.leapp.yangle.practice",
+                    plugin: "com.leapp.yangle.plugin_package",
             ],
 
             url  : [

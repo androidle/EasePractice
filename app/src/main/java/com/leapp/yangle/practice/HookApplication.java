@@ -1,17 +1,28 @@
 package com.leapp.yangle.practice;
 
 import android.app.Application;
+import android.content.Context;
 import android.content.Intent;
+import android.content.res.AssetManager;
+import android.content.res.Resources;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
+import org.jetbrains.annotations.NotNull;
+
+import java.io.File;
+import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.util.ArrayList;
 import java.util.List;
+
+import dalvik.system.DexClassLoader;
+import dalvik.system.PathClassLoader;
 
 
 public class HookApplication extends Application {
@@ -40,6 +51,14 @@ public class HookApplication extends Application {
             e.printStackTrace();
             Log.e("hook", "hookLaunchActivity 失败");
         }
+
+        try {
+            pluginToAppAction();
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e("hook", "pluginToAppAction 失败");
+        }
+
 
     }
 
@@ -139,20 +158,116 @@ public class HookApplication extends Application {
                         Intent intent = (Intent) intentField.get(obj);
                         Intent actionIntent = intent.getParcelableExtra("actionIntent");
                         if (actionIntent != null) {
-                            if (activityClass.contains(actionIntent.getComponent().getClassName())) {
-                                intentField.set(obj, actionIntent);
-                            } else {//没有权限
-                                intentField.set(obj, new Intent(HookApplication.this,PermissionActivity.class));
-                            }
+//                            if (activityClass.contains(actionIntent.getComponent().getClassName())) {
+//                                intentField.set(obj, actionIntent);
+//                            } else {//没有权限
+//                                intentField.set(obj, new Intent(HookApplication.this,PermissionActivity.class));
+//                            }
+                            intentField.set(obj, actionIntent);
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                     break;
+                default:
+
             }
 
             mH.handleMessage(msg);
             return true;
         }
+    }
+
+    /**
+     * 把插件的dexElements和宿主的dexElements融为一体
+     * @throws Exception
+     */
+    public void pluginToAppAction() throws Exception{
+        // 1.find app dexElements 代表PathClassLoader
+        PathClassLoader pathClassLoader = (PathClassLoader) this.getClassLoader();
+
+        Class<?> mBaseDexClassLoaderClass = Class.forName("dalvik.system.BaseDexClassLoader");
+        Field pathListField = mBaseDexClassLoaderClass.getDeclaredField("pathList");
+        pathListField.setAccessible(true);
+        Object mDexPathList = pathListField.get(pathClassLoader);
+        Field dexElementsField = mDexPathList.getClass().getDeclaredField("dexElements");
+        dexElementsField.setAccessible(true);
+        // 本质是Element[] dexElements
+        Object appDexElements = dexElementsField.get(mDexPathList);
+
+        // 2.find plugin dexElements 代表插件DexClassLoader
+        File pluginFile = getPluginFile();
+        File fileDir = this.getDir("pluginDir", Context.MODE_PRIVATE);
+        DexClassLoader dexClassLoader = new DexClassLoader(pluginFile.getAbsolutePath(),
+                fileDir.getAbsolutePath(), null, getClassLoader());
+
+        Class<?> mBaseDexClassLoaderClassPlugin = Class.forName("dalvik.system.BaseDexClassLoader");
+        Field pathListFieldPlugin = mBaseDexClassLoaderClassPlugin.getDeclaredField("pathList");
+        pathListFieldPlugin.setAccessible(true);
+        Object mDexPathListPlugin = pathListFieldPlugin.get(dexClassLoader);
+        Field dexElementsFieldPlugin = mDexPathListPlugin.getClass().getDeclaredField("dexElements");
+        dexElementsFieldPlugin.setAccessible(true);
+        // 本质是Element[] dexElements
+        Object pluginDexElements = dexElementsFieldPlugin.get(mDexPathListPlugin);
+
+        // 3.创建新的 dexElements对象
+        int appDexLength = Array.getLength(appDexElements);
+        int pluginDexLength = Array.getLength(pluginDexElements);
+        int sumLength = appDexLength + pluginDexLength;
+        Object newDexElements = Array.newInstance(appDexElements.getClass().getComponentType(), sumLength);
+        // 4.合并app 与 plugin dexElements 给新胡dexElements对象
+        for (int i = 0; i < sumLength; i++) {
+            if (i < appDexLength) {
+                Array.set(newDexElements, i, Array.get(appDexElements, i));
+            } else {
+                Array.set(newDexElements,i,Array.get(pluginDexElements,i - appDexLength));
+            }
+        }
+
+        // 5.将新的dexElements对象设置到app中去
+        dexElementsField.set(mDexPathList,newDexElements);
+
+
+        // 二 处理加载plugin中layout
+        try {
+            doPluginLayoutLoad();
+        } catch (Exception e) {
+            Log.e("hook", "doPluginLayoutLoad 失败" + e.toString());
+        }
+    }
+
+    @NotNull
+    private File getPluginFile() {
+        return new File(Environment.getExternalStorageDirectory() + File.separator + "plugin_package-debug.apk");
+    }
+
+    private Resources mResources;
+    private AssetManager mAssetManager;
+
+    private void doPluginLayoutLoad() throws Exception {
+        mAssetManager = AssetManager.class.newInstance();
+        // 执行此方法 才能把让插件中的路径添加进来 public int addAssetPath(String path) {
+        Method addAssetPathMethod = mAssetManager.getClass().getDeclaredMethod("addAssetPath", String.class);
+        addAssetPathMethod.setAccessible(true);
+        addAssetPathMethod.invoke(mAssetManager, getPluginFile().getAbsolutePath());
+
+        Resources appResources = getResources();//宿主的配置信息
+
+        // 实例化 final StringBlock[] ensureStringBlocks() 执行后,String.xml color.xml anim.xml才会被初始化
+        Method ensureStringBlocksMethod = mAssetManager.getClass().getDeclaredMethod("ensureStringBlocks");
+        ensureStringBlocksMethod.setAccessible(true);
+        ensureStringBlocksMethod.invoke(mAssetManager);
+
+        mResources = new Resources(mAssetManager, appResources.getDisplayMetrics(), appResources.getConfiguration());
+    }
+
+    @Override
+    public Resources getResources() {
+        return mResources == null ? super.getResources() : mResources;
+    }
+
+    @Override
+    public AssetManager getAssets() {
+        return mAssetManager == null ? super.getAssets() : mAssetManager;
     }
 }

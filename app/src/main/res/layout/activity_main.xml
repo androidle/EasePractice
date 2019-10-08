@@ -37,4 +37,16 @@
             app:layout_constraintTop_toBottomOf="@+id/btn_1"
             android:layout_height="wrap_content"/>
 
+    <Button
+            android:id="@+id/btn_3"
+            android:layout_width="match_parent"
+            android:textAllCaps="false"
+            android:text="startPluginActivity"
+            android:onClick="startPluginActivity"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_2"
+            android:layout_height="wrap_content"/>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

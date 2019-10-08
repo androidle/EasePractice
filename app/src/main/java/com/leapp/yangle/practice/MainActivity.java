@@ -1,5 +1,6 @@
 package com.leapp.yangle.practice;
 
+import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -91,5 +92,24 @@ public class MainActivity extends AppCompatActivity {
      */
     public void startTestActivity(View view) {
         startActivity(new Intent(MainActivity.this,TestActivity.class));
+
+//         另一方式
+//        Intent intent = new Intent();
+//        intent.setComponent(new ComponentName("com.leapp.yangle.practice", "com.leapp.yangle.practice.TestActivity"));
+//        startActivity(intent);
+
+    }
+
+    public void startPluginActivity(View view) {
+        /**
+         *  start activity ComponentInfo{com.leapp.yangle.plugin_package/com.leapp.yangle.plugin_package.
+         *  Plugin_MainActivity}: java.lang.NullPointerException: Attempt to invoke virtual method
+         *  'void android.app.Activity.setContentView(int)' on a null object reference
+         *  todo 待解决
+         */
+        // 在app中启动插件Activity
+        Intent intent = new Intent();
+        intent.setComponent(new ComponentName("com.leapp.yangle.plugin_package", "com.leapp.yangle.plugin_package.Plugin_MainActivity"));
+        startActivity(intent);
     }
 }
