@@ -1,17 +1,18 @@
 package com.leapp.yangle.plugin_package;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
-
-import androidx.annotation.Nullable;
 
 public class Plugin_MainActivity extends BaseActivity {
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        setContentView(R.layout.plugin_main_activity);
+        Log.e("Plugin_MainActivity", "onCreate:====> "  + R.layout.activity_plugin__main);
+        setContentView(R.layout.activity_plugin__main);
 
-        Toast.makeText(this, "This is Plugin", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "====Plugin_MainActivity++++", Toast.LENGTH_SHORT).show();
     }
+
 }
